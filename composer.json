@@ -1,0 +1,50 @@
+{
+  "name": "sivin/crypt",
+  "type": "library",
+  "description": "Small library for encryption via phpseclib",
+  "keywords": [
+	"security",
+	"crypt",
+	"nette",
+	"rsa",
+	"aes",
+	"blowfish",
+	"twofish",
+	"ssh",
+	"sftp",
+	"x509",
+	"x.509",
+	"asn1",
+	"asn.1",
+	"BigInteger"
+  ],
+  "require": {
+	"php": ">= 7.1",
+	"ext-openssl": "*",
+	"phpseclib/phpseclib": "^2.0",
+	"nette/di": "^2.4",
+	"tracy/tracy": "^2.6"
+  },
+  "require-dev": {
+	"ninjify/nunjuck": "^0.3.0@dev"
+  },
+  "license": "MIT",
+  "authors": [
+	{
+	  "name": "Milan Sivak",
+	  "email": "sivin@atlas.cz"
+	}
+  ],
+  "autoload": {
+	"psr-4": {
+	  "SiViN\\Crypt\\": "src/"
+	}
+  },
+  "autoload-dev": {
+	"psr-4": {
+	  "SiViN\\Crypt\\Tests\\": "tests"
+	}
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
