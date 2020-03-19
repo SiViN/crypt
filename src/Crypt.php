@@ -6,6 +6,7 @@ use phpseclib\Crypt\Random;
 use phpseclib\Crypt\Rijndael;
 use phpseclib\Crypt\RSA;
 use SiViN\Crypt\DI\CryptExtension;
+use SiViN\Crypt\Exception\DecryptException;
 use SiViN\Crypt\Exception\KeyNotFoundException;
 use SiViN\Crypt\Exception\WrongKeyException;
 
@@ -204,16 +205,22 @@ class Crypt
 	 * @param string $message
 	 * @param int $mode
 	 *
-	 * @return string
+	 * @return string|null
 	 * @throws KeyNotFoundException
 	 * @throws WrongKeyException
+	 * @throws DecryptException
 	 */
 	public function decryptRijndaelMessage(string $message, int $mode = Rijndael::MODE_CBC)
 	{
+		if (empty($message) === true) {
+			throw new DecryptException('The message is not valid');
+		}
+		
 		$lenSymKey = substr($message, 0, 3);
 		$lenSymKey = hexdec($lenSymKey);
 		$encSymKey = substr($message, 3, $lenSymKey);
 		$encSymKey = base64_decode($encSymKey);
+		
 		$symKey = $this->decryptRsa($encSymKey);
 		
 		$message = substr($message, 3);
@@ -230,12 +237,16 @@ class Crypt
 	 * @return string
 	 * @throws KeyNotFoundException
 	 * @throws WrongKeyException
+	 * @throws DecryptException
 	 */
 	public function decryptRsa(string $cipherStr): string
 	{
 		$this->loadKey($this->privateKey);
-		$str = $this->rsa->decrypt($cipherStr);
-		return $str;
+		$res = @$this->rsa->decrypt($cipherStr);
+		if (is_string($res)) {
+			return $res;
+		}
+		throw new DecryptException('The cipher cannot be decrypted');
 	}
 	
 	/**
@@ -285,11 +296,19 @@ class Crypt
 		$this->lastKeyHash = '';
 	}
 	
+	/**
+	 * @return bool
+	 * @throws KeyNotFoundException
+	 */
 	public function hasDefinedPublicKey(): bool
 	{
 		return $this->validateKey($this->publicKey, false);
 	}
 	
+	/**
+	 * @return bool
+	 * @throws KeyNotFoundException
+	 */
 	public function hasDefinedPrivateKey(): bool
 	{
 		return $this->validateKey($this->privateKey, false);
