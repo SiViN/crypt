@@ -22,7 +22,7 @@
 	"php": ">= 7.1",
 	"ext-openssl": "*",
 	"phpseclib/phpseclib": "^2.0",
-	"nette/di": "^2.4",
+	"nette/di": "~3.0",
 	"tracy/tracy": "^2.6"
   },
   "require-dev": {
