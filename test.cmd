@@ -1,0 +1,1 @@
+vendor/bin/tester -p php -c tests/php-win.ini tests
