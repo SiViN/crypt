@@ -40,11 +40,7 @@ class CryptRijndaelTest extends BaseTestCase
 		Assert::equal($str, $this->str);
 		
 		Assert::exception(function () use ($crypt, $cipherStr) {
-			$res = $crypt->decryptRijndael('wrong key', $cipherStr);
-			//Randomly bug in phpseclib
-			if ($res !== false && strcmp($res, $this->str) !== 0) {
-				throw new WrongKeyException();
-			}
+			$crypt->decryptRijndael('wrong key', $cipherStr);
 		}, WrongKeyException::class);
 	}
 	

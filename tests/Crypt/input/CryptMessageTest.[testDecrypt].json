@@ -1,1 +1,0 @@
-{"status":"error","data":{"code":422,"error":"Request body contains an error. See context for details.","context":{"validation":{"[rizeniList][0].spisova_znacka":["This value should not be blank."],"[rizeniList][1].spisova_znacka":["This value should not be blank."],"[rizeniList][2].spisova_znacka":["This value should not be blank."]}}}}
